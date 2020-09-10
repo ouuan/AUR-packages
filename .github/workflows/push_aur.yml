@@ -2,11 +2,11 @@ name: "Update AUR"
 
 on:
   push:
-    branches:
-      - master
     paths-ignore:
       - "**.md"
-      - ".gitignore"
+  pull_request:
+    paths-ignore:
+      - "**.md"
 
 jobs:
   aur:
@@ -33,6 +33,7 @@ jobs:
           pkgname: ${{ matrix.pkgname }}
 
       - name: Publish to AUR
+        if: github.event_name == 'push'
         uses: KSXGitHub/github-actions-deploy-aur@v2.1.0
         with:
           pkgname: ${{ matrix.pkgname }}
