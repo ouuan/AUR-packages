@@ -40,4 +40,5 @@ jobs:
           commit_username: Yufan You
           commit_email: ouuansteve@gmail.com
           commit_message: "Update from GitHub Actions: ${{ github.event.head_commit.message }}\n\nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
+          allow_empty_commits: false
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
