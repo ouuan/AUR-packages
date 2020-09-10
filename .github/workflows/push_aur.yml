@@ -21,19 +21,19 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Check PKGBUILD
-        uses: 2m/arch-pkgbuild-builder@master
+        uses: 2m/arch-pkgbuild-builder@v1.16
         with:
           target: pkgbuild
           pkgname: ${{ matrix.pkgname }}
 
       - name: Check .SRCINFO
-        uses: 2m/arch-pkgbuild-builder@master
+        uses: 2m/arch-pkgbuild-builder@v1.16
         with:
           target: srcinfo
           pkgname: ${{ matrix.pkgname }}
 
       - name: Publish to AUR
-        uses: KSXGitHub/github-actions-deploy-aur@master
+        uses: KSXGitHub/github-actions-deploy-aur@v2.1.0
         with:
           pkgname: ${{ matrix.pkgname }}
           pkgbuild: ${{ matrix.pkgname }}/PKGBUILD
