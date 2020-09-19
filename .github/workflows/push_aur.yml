@@ -27,13 +27,14 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
       - name: Check PKGBUILD
-        uses: 2m/arch-pkgbuild-builder@v1.16
+        uses: ouuan/arch-pkgbuild-builder@multilib
         with:
           target: pkgbuild
           pkgname: ${{ matrix.pkgname }}
+          debug: true
 
       - name: Check .SRCINFO
-        uses: 2m/arch-pkgbuild-builder@v1.16
+        uses: ouuan/arch-pkgbuild-builder@multilib
         with:
           target: srcinfo
           pkgname: ${{ matrix.pkgname }}
