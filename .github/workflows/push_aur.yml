@@ -20,6 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
       - name: Check PKGBUILD
         uses: 2m/arch-pkgbuild-builder@v1.16
         with:
@@ -32,14 +38,17 @@ jobs:
           target: srcinfo
           pkgname: ${{ matrix.pkgname }}
 
-      - name: Publish to AUR
-        if: github.event_name == 'push'
-        uses: KSXGitHub/github-actions-deploy-aur@v2.1.0
-        with:
-          pkgname: ${{ matrix.pkgname }}
-          pkgbuild: ${{ matrix.pkgname }}/PKGBUILD
-          commit_username: Yufan You
-          commit_email: ouuansteve@gmail.com
-          commit_message: "Update from GitHub Actions: ${{ github.event.head_commit.message }}\n\nhttps://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
-          allow_empty_commits: false
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Clone AUR and update
+        run: |
+          sudo git clean -dfx
+          git clone ssh://aur@aur.archlinux.org/${{ matrix.pkgname }}.git ../aur
+          rm ../aur/* || true
+          cp ${{ matrix.pkgname }}/* ${{ matrix.pkgname }}/.SRCINFO ../aur
+          cd ../aur
+          git config user.name "Yufan You"
+          git config user.email "ouuansteve@gmail.com"
+          git add -A
+          git diff-index @ --exit-code --quiet || git commit -m "Update from GitHub Actions: ${{ github.event.head_commit.message }}
+
+          https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
+          git push
