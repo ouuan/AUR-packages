@@ -15,7 +15,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pkgname: ["guide-bin", "lean-community", "python-mathlibtools"]
+        pkgname:
+          [
+            "adobe-source-han-super-otc",
+            "guide-bin",
+            "lean-community",
+            "python-mathlibtools",
+          ]
 
     steps:
       - uses: actions/checkout@v2
