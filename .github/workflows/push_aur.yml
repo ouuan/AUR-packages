@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Generate matrix
         id: gen-matrix
-        run: echo "::set-output name=packages::$(ls */ -d | jq -R . | jq -cs .)"
+        run: echo "::set-output name=packages::$(ls */ -d | cut -f1 -d'/' | jq -R . | jq -cs .)"
     outputs:
       packages: ${{ steps.gen-matrix.outputs.packages }}
 
