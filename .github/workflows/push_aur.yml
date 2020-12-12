@@ -9,19 +9,24 @@ on:
       - "**.md"
 
 jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate matrix
+        id: gen-matrix
+        run: echo "::set-output name=packages::$(ls */ -d | jq -R . | jq -cs .)"
+    outputs:
+      packages: ${{ steps.gen-matrix.outputs.packages }}
+
   aur:
     runs-on: ubuntu-latest
+    needs: generate-matrix
     if: github.repository_owner == 'ouuan'
     strategy:
       fail-fast: false
       matrix:
-        pkgname:
-          [
-            "adobe-source-han-super-otc",
-            "guide-bin",
-            "lean-community",
-            "python-mathlibtools",
-          ]
+        pkgname: ${{ fromJson(needs.generate-matrix.outputs.packages) }}
 
     steps:
       - uses: actions/checkout@v2
