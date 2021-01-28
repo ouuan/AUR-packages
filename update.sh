@@ -26,5 +26,8 @@ sed -i "s/pkgrel=[0-9\.]\+/pkgrel=1/" PKGBUILD
 checksums="$(makepkg -g)"
 perl -i -p0e "s/sha256sums=\([0-9a-z \n]+\)/$checksums/" PKGBUILD
 makepkg --printsrcinfo >.SRCINFO
-rm ./*.gz
 git commit -am "$pkg: update to $ver"
+
+git clean -dxn
+read
+git clean -dxf
