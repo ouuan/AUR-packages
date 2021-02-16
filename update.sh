@@ -2,6 +2,14 @@
 
 set -eo pipefail
 
+confirm() {
+    read -pr "Continue? [y/N] " reply
+    case "$reply" in
+    [yY][eE][sS] | [yY]) true ;;
+    *) false ;;
+    esac
+}
+
 if [[ "$1" == "" ]]; then
     echo "Package?"
     select pkg in $(exa -D); do
@@ -16,7 +24,7 @@ cd "$pkg"
 if [[ "$2" == "" ]]; then
     source PKGBUILD
     echo "Old version: $pkgver"
-    read -p "New version? " ver
+    read -pr "New version? " ver
 else
     ver="$2"
 fi
@@ -26,8 +34,14 @@ sed -i "s/pkgrel=[0-9\.]\+/pkgrel=1/" PKGBUILD
 checksums="$(makepkg -g)"
 perl -i -p0e "s/sha256sums=\(['0-9a-z \n]+\)/$checksums/" PKGBUILD
 makepkg --printsrcinfo >.SRCINFO
-git commit -am "$pkg: update to $ver"
 
 git clean -dxn
-read
+confirm
 git clean -dxf
+
+git add -A
+git diff --cached
+confirm
+
+git commit -am "$pkg: update to $ver"
+git push
