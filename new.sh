@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eo pipefail
+
 if [[ -n "$1" ]]; then
     pkgname="$1"
 else
@@ -8,7 +10,9 @@ fi
 
 mkdir "$pkgname"
 
-echo "# Maintainer: Yufan You <ouuansteve at gmail>
+source config
+
+echo "# Maintainer: $maintainer
 
 pkgname=${pkgname}
 pkgver=
