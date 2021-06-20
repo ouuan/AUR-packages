@@ -21,6 +21,6 @@ package() {
     mkdir -p "$_npmdir"
     cd "$_npmdir"
     npm install -g --prefix "$pkgdir/usr" "$_npmname@$pkgver"
-    install -Dm644 "$_npmdir/$_npmname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "$_npmdir/$_npmname/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE.md"
     chown -R root:root "${pkgdir}"
 }
