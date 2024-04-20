@@ -14,7 +14,7 @@ provides=('xss-lock')
 conflicts=('xss-lock')
 source=("$pkgname::git+https://github.com/xdbob/xss-lock#branch=locked_hint"
         '0016-Do-not-core-dump-when-exiting-due-to-loss-of-X-conne.patch')
-md5sums=('SKIP' '4063c3624f78fa592e1e36975acd43746d06866c00f8ab9500d3b578c538fc93')
+sha256sums=('SKIP' '4063c3624f78fa592e1e36975acd43746d06866c00f8ab9500d3b578c538fc93')
 
 pkgver() {
   cd "$pkgname"
