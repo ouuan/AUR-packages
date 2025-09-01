@@ -2,14 +2,14 @@
 # Maintainer: asm0dey <me@asm0dey.site>
 
 pkgname=docker-pussh
-pkgver=0.2.1
+pkgver=0.2.2
 pkgrel=1
 pkgdesc='Push docker images directly to remote servers without an external registry'
 arch=(any)
 url='https://github.com/psviderski/unregistry'
 license=('Apache-2.0')
 source=("docker-pussh-$pkgver::$url/raw/refs/tags/v$pkgver/docker-pussh")
-sha256sums=('8062c6f99509305cfcadc0e88d2704f4fa4d8447b94e0f9a3d8e1b64d885218e')
+sha256sums=('ed1e56b37ef9a4e6208a071ad50d2fc79994220821074b7006703fd50ce3c9a8')
 depends=(docker bash openssh)
 
 package() {
